@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Civ 7 Map Planner</title>
+    <style>
+        body { margin: 0; background: #222; colour: #fff; font-family: sans-serif; display: flex; }
+        #app { padding: 20px; display: flex; gap: 20px; }
+        canvas { background: #111; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+    </style>
 </head>
 <body>
     <div id="app">
-        <canvas id="mapCanvas" width="800" height="600" style="border:1px solid #333;"></canvas>
+        <canvas id="mapCanvas" width="900" height="650"></canvas>
     </div>
     <script type="module" src="/src/main.ts"></script>
 </body>

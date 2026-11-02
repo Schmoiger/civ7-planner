@@ -324,7 +324,7 @@ Verify that your data structures are correct before moving forward:
 
 ---
 
-## Module 3: Geometric Calculations (The Maths Engine)
+## Module 3: Geometric Calculations (The Maths Engine) - DONE ✅
 
 • Initialise Honeycomb instance: Define your custom hex layout dimensions (e.g., radius size in pixels, orientation: 'pointy').
 • Implement clean-and-flush helper utilities: Write a function that loops through your active map states to clear historical dynamic yields.bonus data fields.
@@ -493,7 +493,7 @@ Module 3 Milestone Verification
 
 ---
 
-## Module 4: Simple Canvas View Pipeline
+## Module 4: Simple Canvas View Pipeline - DONE ✅
 
 • Scaffold standard index.html page setup: Inject a single <canvas id="mapCanvas"> element side-by-side with a sidebar container wrapper block.
 • Implement Hex Vector Drawer: Write a loop that converts a cell's numerical spatial coordinates (hex.corners) into native Canvas path commands (ctx.moveTo, ctx.lineTo).

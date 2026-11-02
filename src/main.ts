@@ -1,29 +1,33 @@
 import { createMapFactory } from './engine/factory';
 import { recalculateMapAdjacencies } from './engine/mathEngine';
+import { drawMapCanvas } from './view/canvasRender';
 
-console.log("Initializing Civilization 7 Map Planner runtime pipeline...");
+console.log("Executing Core Module 4 Render Validation Pipeline...");
 
-// 1. Generate a small 4x4 verification grid initialized as clean Grassland
-const testMap = createMapFactory(4, 4, 'Grassland');
+// 1. Initialize a Standard scale 14x10 grid scenario mapped as a clean Plains biome layout
+const activeScenarioMap = createMapFactory(14, 10, 'Plains');
 
-// 2. Inject an Industrial Zone onto an arbitrary position
-const targetKey = '1,1';
-testMap.tiles[targetKey].infrastructure = 'Industrial_Zone';
+// 2. Artificially place static elements on our configuration state to test rule structures
+// Place a Campus tile
+activeScenarioMap.tiles['2,2'].infrastructure = 'Campus';
 
-// 3. Place a Mine directly adjacent to it at coordinate position '1,0'
-const mineKey = '1,0';
-testMap.tiles[mineKey].infrastructure = 'Mine';
+// Flank the Campus with two individual Mountain structures
+activeScenarioMap.tiles['1,2'].terrain = 'Mountain';
+activeScenarioMap.tiles['2,1'].terrain = 'Mountain';
 
-console.log("Pre-Calculation Status for Industrial Zone:", JSON.stringify(testMap.tiles[targetKey].yields));
+// Place an Industrial Zone cluster tracking a custom Mine configuration nearby
+activeScenarioMap.tiles['5,4'].infrastructure = 'Industrial_Zone';
+activeScenarioMap.tiles['5,3'].infrastructure = 'Mine';
 
-// 4. Trigger the geometric processing calculator engine
-recalculateMapAdjacencies(testMap);
+// 3. Execute math processing loops
+recalculateMapAdjacencies(activeScenarioMap);
 
-console.log("Post-Calculation Status for Industrial Zone:", JSON.stringify(testMap.tiles[targetKey].yields));
+// 4. Resolve the DOM viewport node and push rendering pipelines out to the window canvas
+const canvasElement = document.getElementById('mapCanvas') as HTMLCanvasElement;
 
-// 5. Assert your calculation rules directly
-if (testMap.tiles[targetKey].yields.bonus.production === 1) {
-    console.log("🎉 SUCCESS: Adjacency Loop calculated the +1 Production mine bonus correctly!");
+if (canvasElement) {
+    drawMapCanvas(canvasElement, activeScenarioMap);
+    console.log("🎉 SUCCESS: Vector paths and data metrics rendered onto viewport cleanly!");
 } else {
-    console.error("❌ ERROR: Calculation Engine returned unexpected output values.");
+    console.error("❌ CRITICAL ERROR: Target view canvas DOM element container not found.");
 }
