@@ -684,7 +684,7 @@ Module 4 Milestone Verification
 
 ---
 
-## Module 5: User Interaction & Toolbar Brushes
+## Module 5: User Interaction & Toolbar Brushes - DONE ✅
 
 • Build Sidebar Brush Menu HTML panel: Add flat buttons for terrains, districts, and placing your starting tile flags.
 • Track global activeBrush pointer variable: Store the active brush string state locally in your master UI controller module.
@@ -860,7 +860,7 @@ Module 5 Milestone Verification
 
 ---
 
-## Module 6: Edge Cases & Systematic Verification
+## Module 6: Edge Cases & Systematic Verification - DONE ✅
 
 • Run Edge Detection Tests: Paint target structures directly against the outermost boundaries of your grid layout (e.g., at q:0, r:0) to ensure looking up non-existent neighbor arrays does not crash the script with undefined exceptions.
 • Verify Cluster Rulesets: Place multi-tile farm patches to ensure stacking adjacency modifiers aggregate accurately without recursive calculator loops.
