@@ -1,6 +1,6 @@
-# Agent Harness
+# Civ7 Planner
 
-Agentic Orchestration Harness runtime adapter generator and drift validator
+Civilisation 7 city planning tool
 
 ---
 
