@@ -22,6 +22,8 @@ export interface YieldFields {
   gold: number;
   culture: number;
   happiness: number;
+  /** Science yield from terrain/buildings */
+  science: number;
   /** Current production of the tile */
   baseProduction?: number;
   /** Additional production from tile improvements */
@@ -122,6 +124,7 @@ export function createBlankYields(): YieldFields {
     gold: 0,
     culture: 0,
     happiness: 0,
+    science: 0,
     baseProduction: 0,
     bonusProduction: 0,
     foodStorage: 0

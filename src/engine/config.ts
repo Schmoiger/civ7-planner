@@ -2,24 +2,24 @@ import { TerrainType, YieldFields, InfrastructureType, IAdjacencyRule, createBla
 
 // Civ 7 Terrain Base Yields Map Setup
 const BASE_TERRAIN_YIELDS: Record<TerrainType, YieldFields> = {
-  Arid: { food: -1, production: 0, gold: 1, culture: 0, happiness: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Boreal: { food: 0, production: 1, gold: 0, culture: 0, happiness: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Coastal: { food: 1, production: 1, gold: 1, culture: 0, happiness: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Continental: { food: 1, production: 1, gold: 1, culture: 1, happiness: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Desert: { food: -2, production: 0, gold: 2, culture: 0, happiness: -1, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Grassland: { food: 2, production: 1, gold: 0, culture: 0, happiness: 1, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  GreatLakes: { food: 1, production: 1, gold: 0, culture: 0, happiness: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Island: { food: 1, production: 0, gold: 1, culture: 0, happiness: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Jungle: { food: 1, production: 0, gold: 0, culture: 0, happiness: -1, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Mountain: { food: 0, production: 1, gold: 0, culture: 1, happiness: -1, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Ocean: { food: 0, production: 0, gold: 0, culture: 0, happiness: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Plains: { food: 1, production: 1, gold: 0, culture: 1, happiness: 1, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Rainforest: { food: 1, production: 0, gold: 0, culture: 2, happiness: 1, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  River: { food: 1, production: 0, gold: 0, culture: 0, happiness: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Savanna: { food: 1, production: 1, gold: 0, culture: 0, happiness: 1, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Shrubland: { food: 0, production: 1, gold: 0, culture: 0, happiness: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Tundra: { food: 0, production: 0, gold: 0, culture: 0, happiness: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
-  Wetland: { food: 1, production: 0, gold: 0, culture: 0, happiness: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 }
+  Arid: { food: -1, production: 0, gold: 1, culture: 0, happiness: 0, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Boreal: { food: 0, production: 1, gold: 0, culture: 0, happiness: 0, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Coastal: { food: 1, production: 1, gold: 1, culture: 0, happiness: 0, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Continental: { food: 1, production: 1, gold: 1, culture: 1, happiness: 0, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Desert: { food: -2, production: 0, gold: 2, culture: 0, happiness: -1, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Grassland: { food: 2, production: 1, gold: 0, culture: 0, happiness: 1, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  GreatLakes: { food: 1, production: 1, gold: 0, culture: 0, happiness: 0, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Island: { food: 1, production: 0, gold: 1, culture: 0, happiness: 0, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Jungle: { food: 1, production: 0, gold: 0, culture: 0, happiness: -1, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Mountain: { food: 0, production: 1, gold: 0, culture: 1, happiness: -1, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Ocean: { food: 0, production: 0, gold: 0, culture: 0, happiness: 0, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Plains: { food: 1, production: 1, gold: 0, culture: 1, happiness: 1, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Rainforest: { food: 1, production: 0, gold: 0, culture: 2, happiness: 1, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  River: { food: 1, production: 0, gold: 0, culture: 0, happiness: 0, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Savanna: { food: 1, production: 1, gold: 0, culture: 0, happiness: 1, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Shrubland: { food: 0, production: 1, gold: 0, culture: 0, happiness: 0, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Tundra: { food: 0, production: 0, gold: 0, culture: 0, happiness: 0, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 },
+  Wetland: { food: 1, production: 0, gold: 0, culture: 0, happiness: 0, science: 0, baseProduction: 0, bonusProduction: 0, foodStorage: 0 }
 };
 
 // Civ 7 Macro Adjacency Clusters Map Setup
@@ -59,4 +59,4 @@ export const CIV7_ADJACENCY_RULES: IAdjacencyRule[] = [
   }
 ];
 
-export { BASE_TERRAIN_YIELDS };
+export { BASE_TERRAIN_YIELDS, createBlankYields };

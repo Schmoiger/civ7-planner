@@ -12,6 +12,7 @@
     "honeycomb-grid": "^4.1.4"
   },
   "devDependencies": {
+    "@types/node": "^26.6.6",
     "typescript": "^5.0.0",
     "vite": "^5.0.0"
   }
