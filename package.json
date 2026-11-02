@@ -1,14 +1,18 @@
 {
-  "name": "civ7-planner",
+  "name": "civ7-map-planner",
   "private": true,
-  "packageManager": "yarn@4.18.1",
-  "workspaces": [
-    "frontend/civ7-web"
-  ],
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "install:all": "yarn install",
-    "lint": "yarn workspaces foreach run lint",
-    "test": "yarn workspaces foreach run test",
-    "typecheck": "yarn workspaces foreach run typecheck"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "honeycomb-grid": "^4.1.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
   }
 }
