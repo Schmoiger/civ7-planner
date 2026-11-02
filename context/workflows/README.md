@@ -58,6 +58,8 @@ human approves the diff`"]
     Derive --> Design
 ```
 
+
+
 Deciding principle (see `context/agents/orchestrator.md` § Intake and
 `small-task.yaml` § fitness): over-formalism is cheap, under-formalism is
 expensive. When unsure, default to the heavier workflow.
@@ -78,6 +80,8 @@ message carries causal chain`"]
     A -->|"cannot reproduce"| E["`Escalate to human`"]
     C -->|"regression"| B
 ```
+
+
 
 ### Notes for agents
 
@@ -127,6 +131,8 @@ tech-lead (gate)`"]
     O -->|"CHANGES REQUIRED"| G
 ```
 
+
+
 ### Notes for agents
 
 - **task-planning**: `@tech-lead` decomposes into `artefacts/build/subtask-plan.yaml`. Every subtask carries a command-verifiable AC, a minimal context bundle (line-range references where possible), a `file_scope` disjoint from parallel subtasks, and `max_retries` (default 2). Streams: python / typescript. 
@@ -153,6 +159,8 @@ optional`"]
     D --> E["`Finalise & publish
 documentation`"]
 ```
+
+
 
 ### Notes for agents
 
@@ -181,6 +189,8 @@ coders / orchestrator`"]
 agent-incidents.md + portable tasks`"]
 ```
 
+
+
 ### Notes for agents
 
 - Two modes: **incident** (human reports a failure — one incident per run, proceeds on diagnosis) and **retrospective** (after a deployment or sprint or on demand — multiple findings, but the human decides which to fix at the discuss gate).
@@ -201,6 +211,8 @@ tech-lead (gate)`"]
     B -->|"staging validated · rollback tested · ≥97%"| C["`Production`"]
     B -->|"failed checks"| A
 ```
+
+
 
 ### Notes for agents
 
@@ -244,6 +256,8 @@ product-owner · MC questions`"]
     L --> M["`Phase 8 · Finalise & Review Gate
 human APPROVED → promote to artefacts/{category}/derived/`"]
 ```
+
+
 
 ### Runtime Sequence
 
@@ -300,6 +314,8 @@ sequenceDiagram
     O->>D: promote drafts to artefacts/{category}/derived/ and commit
     end
 ```
+
+
 
 | Action | Tool (@ zero token cost) | Agent (@ token spend) |
 |-------|----------------|-------------------|
@@ -359,6 +375,8 @@ ui-designer`"]
 task-planning`"]
 ```
 
+
+
 ### Notes for agents
 
 - `@product-owner` owns discovery in two modes: interview into `discovery-notes.md`, then formalise into `requirements.md` + `user-stories.md`.
@@ -384,6 +402,8 @@ tech-lead (gate)`"]
 return to phase`"]
 ```
 
+
+
 ### Notes for agents
 
 - No code changes in this workflow — failures are **reported**, not fixed (fixes belong to the sprint). Report flaky tests separately from genuine failures.
@@ -391,6 +411,8 @@ return to phase`"]
 - Thresholds at the quality gate: 100% pass rate on all three suites; ≥95% coverage on changed feature modules; ≥80% baseline elsewhere.
 - E2E requires at least one screenshot per workflow in `artefacts/test-results/e2e/screenshots/`, and the log must show browser interactions, not just API calls.
 
+
+---
 
 ## prototype.yaml
 
@@ -405,6 +427,8 @@ python-coder + typescript-coder (parallel)`"]
 optional · functional-tester`"]
 ```
 
+
+
 ### Notes for agents
 
 - Prototype code must NOT go to production. No quality gates exist — review before promoting.
@@ -412,6 +436,8 @@ optional · functional-tester`"]
 - Keep `requirements.md` lightweight — document the core hypothesis, not a spec; `architecture.md` high-level key decisions only, no detailed API specs.
 - Commit after each meaningful milestone — git log is the recovery point. If the prototype succeeds, rewrite with the `build` workflow.
 
+
+---
 
 ## small-task.yaml
 
@@ -428,6 +454,8 @@ orchestrator = default agent`"]
     E -->|"grown scope"| G["`Overshoot protocol
 approve · split · promote`"]
 ```
+
+
 
 ### Notes for agents
 
