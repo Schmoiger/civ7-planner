@@ -50,6 +50,14 @@ export const CIV7_ADJACENCY_RULES: IAdjacencyRule[] = [
     { sourceType: b, triggerType: 'terrain' as const, triggerTarget: 'Mountain' as const, bonusYield: bonus({ culture: 1 }) }
   ]),
 
+  // --- Category 4: Science (Campus adjacent to Mountains) ---
+  {
+    sourceType: 'Campus',
+    triggerType: 'terrain' as const,
+    triggerTarget: 'Mountain' as const,
+    bonusYield: bonus({ science: 2 })
+  },
+
   // --- Shared Mechanics: Farm Clusters ---
   {
     sourceType: 'Farm',
