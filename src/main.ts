@@ -1,33 +1,27 @@
 import { createMapFactory } from './engine/factory';
 import { recalculateMapAdjacencies } from './engine/mathEngine';
 import { drawMapCanvas } from './view/canvasRender';
+import { setupInteractionEngine } from './ui/interaction';
 
-console.log("Executing Core Module 4 Render Validation Pipeline...");
+console.log("Starting Civilization 7 Map Planner...");
 
-// 1. Initialize a Standard scale 14x10 grid scenario mapped as a clean Plains biome layout
-const activeScenarioMap = createMapFactory(14, 10, 'Plains');
+// 1. Generate a baseline map configuration (14 columns by 10 rows)
+const mapScenario = createMapFactory(14, 10, 'Grassland');
 
-// 2. Artificially place static elements on our configuration state to test rule structures
-// Place a Campus tile
-activeScenarioMap.tiles['2,2'].infrastructure = 'Campus';
+// 2. Run initial base logic pass to ensure base structures line up
+recalculateMapAdjacencies(mapScenario);
 
-// Flank the Campus with two individual Mountain structures
-activeScenarioMap.tiles['1,2'].terrain = 'Mountain';
-activeScenarioMap.tiles['2,1'].terrain = 'Mountain';
+// 3. Resolve essential DOM nodes
+const canvas = document.getElementById('mapCanvas') as HTMLCanvasElement;
 
-// Place an Industrial Zone cluster tracking a custom Mine configuration nearby
-activeScenarioMap.tiles['5,4'].infrastructure = 'Industrial_Zone';
-activeScenarioMap.tiles['5,3'].infrastructure = 'Mine';
+if (canvas) {
+    // 4. Initial paint cycle execution pass
+    drawMapCanvas(canvas, mapScenario);
 
-// 3. Execute math processing loops
-recalculateMapAdjacencies(activeScenarioMap);
+    // 5. Bootstrap the live mouse interaction click routing cycles
+    setupInteractionEngine(canvas, mapScenario);
 
-// 4. Resolve the DOM viewport node and push rendering pipelines out to the window canvas
-const canvasElement = document.getElementById('mapCanvas') as HTMLCanvasElement;
-
-if (canvasElement) {
-    drawMapCanvas(canvasElement, activeScenarioMap);
-    console.log("🎉 SUCCESS: Vector paths and data metrics rendered onto viewport cleanly!");
+    console.log("🚀 Application environment fully initialized and ready!");
 } else {
-    console.error("❌ CRITICAL ERROR: Target view canvas DOM element container not found.");
+    console.error("❌ CRITICAL BOOT ERROR: Target map canvas canvas node missing from viewport DOM.");
 }
