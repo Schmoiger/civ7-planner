@@ -1,7 +1,7 @@
 import { IMapConfig } from '../types/grid';
 import { getHoneycombGrid, recalculateMapAdjacencies } from '../engine/mathEngine';
 import { drawMapCanvas } from '../view/canvasRender';
-import { BASE_TERRAIN_YIELDS, createBlankYields } from '../engine/config';
+import { BASE_TERRAIN_YIELDS } from '../engine/config';
 
 // Global state container tracking active toolbar configuration modifiers
 let activeBrushType: 'terrain' | 'infra' = 'terrain';
@@ -52,7 +52,7 @@ export function setupInteractionEngine(canvas: HTMLCanvasElement, mapConfig: IMa
 
     // --- Part C: State Mutation Router ---
     if (activeBrushType === 'terrain') {
-      const chosenTerrain = activeBrushValue as any;
+      const chosenTerrain = activeBrushValue as keyof typeof BASE_TERRAIN_YIELDS;
       tileState.terrain = chosenTerrain;
       // Re-fetch immutable foundation yields automatically on terrain transformation
       tileState.yields.base = { ...BASE_TERRAIN_YIELDS[chosenTerrain] };

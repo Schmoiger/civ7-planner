@@ -1,4 +1,4 @@
-import { IMapConfig, ITileState } from '../types/grid';
+import { IMapConfig } from '../types/grid';
 import { getHoneycombGrid } from '../engine/mathEngine';
 
 // Configuration lookup dictionary mapping flat hexadecimal colour codes directly onto terrains
@@ -58,7 +58,7 @@ export function drawMapCanvas(canvas: HTMLCanvasElement, mapConfig: IMapConfig):
     // --- Part C: Centre Vertex Numerical Overlay Text Strings ---
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 11px sans-serif';
-    ctx.textAlign = 'centre';
+    ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
     // Label infrastructure shortcodes or coordinate locations cleanly
