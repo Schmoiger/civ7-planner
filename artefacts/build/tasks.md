@@ -149,7 +149,8 @@ Step 1: Create the Types Specification File
 First, we need to codify our core types and structures into a file that other files can import.
 1. Create a new file named src/types/grid.ts.
 2. Paste the following strictly-typed structural contracts into it:
-typescript
+
+```typescript
 export type TerrainType = 'Ocean' | 'Coast' | 'Grassland' | 'Plains' | 'Desert' | 'Tundra' | 'Mountain';
 export type FeatureType = 'None' | 'Woods' | 'Rainforest' | 'Marsh' | 'Oasis' | 'Floodplains';
 export type InfrastructureType = 'None' | 'Farm' | 'Mine' | 'Campus' | 'Commercial_Hub' | 'Theater_Square' | 'Industrial_Zone';
@@ -192,14 +193,15 @@ export interface IAdjacencyRule {
   triggerTarget: string; 
   bonusYield: Partial<IYieldMetrics>;
 }
-Use code with caution.
+```
 
 Step 2: Establish Static Constants and Game Rules
 
 Next, create a static rules configuration file. This isolates your game database values from your core software engineering logic loops.
 1. Create a new file named src/engine/config.ts.
 2. Implement your Civ 7 matrices by pasting this content:
-typescript
+
+```typescript
 import { TerrainType, FeatureType, InfrastructureType, IYieldMetrics, IAdjacencyRule } from '../types/grid';
 
 // Helper to instantly generate a blank metrics object
@@ -260,14 +262,15 @@ export const CIV7_ADJACENCY_RULES: IAdjacencyRule[] = [
     bonusYield: { food: 1 }
   }
 ];
-Use code with caution.
+```
 
 Step 3: Write the Map Generation Factory
 
 Now we will write a factory utility to instantly spin up maps of any scale with pre-calculated baseline terrain values.
 1. Create a file named src/engine/factory.ts.
 2. Paste the following factory implementation:
-typescript
+
+```typescript
 import { IMapConfig, ITileState, TerrainType } from '../types/grid';
 import { BASE_TERRAIN_YIELDS, createBlankYields } from './config';
 
@@ -310,7 +313,7 @@ export function createMapFactory(width: number, height: number, defaultTerrain: 
     tiles
   };
 }
-Use code with caution.
+```
 
 Module 2 Milestone Checklist
 
@@ -323,20 +326,21 @@ Verify that your data structures are correct before moving forward:
 
 ## Module 3: Geometric Calculations (The Maths Engine)
 
-• Initialize Honeycomb instance: Define your custom hex layout dimensions (e.g., radius size in pixels, orientation: 'pointy').
+• Initialise Honeycomb instance: Define your custom hex layout dimensions (e.g., radius size in pixels, orientation: 'pointy').
 • Implement clean-and-flush helper utilities: Write a function that loops through your active map states to clear historical dynamic yields.bonus data fields.
 • Build Adjacency Rule Interpreter: Write the function that parses a single cell's coordinate ring, searches its 6 neighbors for specific targets, and assigns structural yield points.
 • Verify math in terminal console: Build a micro runner script that sets up a 3-tile grid, hardcodes a "Campus" next to a "Mountain", triggers your math loop, and prints out the calculated total results to verify accuracy.
 
 Here are the step-by-step instructions to implement Module 3: Geometric Calculations (The Math Engine).
-In this module, you will initialize the honeycomb-grid engine, establish clean structural utilities to flush old calculations, and build the rule evaluation loop that processes adjacent tiles dynamically.
+In this module, you will initialise the honeycomb-grid engine, establish clean structural utilities to flush old calculations, and build the rule evaluation loop that processes adjacent tiles dynamically.
 
 Step 1: Create the Hexy Math Engine Adapter
 
 We need a module that bridges Honeycomb's geometric pathfinding and neighbor detection with your custom ITileState map dictionary.
 1. Create a new file named src/engine/mathEngine.ts.
 2. Paste the following setup to define your custom Honeycomb Hex prototype:
-typescript
+
+```typescript
 import { defineHex, Grid, rectangle } from 'honeycomb-grid';
 import { IMapConfig, ITileState } from '../types/grid';
 import { CIV7_ADJACENCY_RULES, createBlankYields } from './config';
@@ -358,12 +362,13 @@ export function getHoneycombGrid(mapConfig: IMapConfig): Grid<CivHex> {
     })
   );
 }
-Use code with caution.
+```
 
 Step 2: Implement the Yield Recalculation Engine Loop
 
 Now, append the core evaluation loop to your src/engine/mathEngine.ts file. This engine loop will clear out historic calculations and execute a single-directional sweep of your tile neighborhoods based on the macro-rules we set up in Module 2.
-typescript
+
+```typescript
 /**
  * Evaluates the entire grid layout map, updates adjacency bonus matrices,
  * and collapses total calculations down cleanly.
@@ -438,20 +443,21 @@ export function recalculateMapAdjacencies(mapConfig: IMapConfig): void {
     };
   });
 }
-Use code with caution.
+```
 
 Step 3: Run the Verification Script
 
 Let's test this module directly in your browser console using Vite. This checks your math formulas for accuracy before you start drawing layout shapes.
 1. Open your project entry point file src/main.ts.
 2. Overwrite its contents with this debugging sequence:
-typescript
+
+```typescript
 import { createMapFactory } from './engine/factory';
 import { recalculateMapAdjacencies } from './engine/mathEngine';
 
 console.log("Initializing Test Scenario...");
 
-// 1. Generate a small 4x4 verification grid initialized as clean Grassland
+// 1. Generate a small 4x4 verification grid initialised as clean Grassland
 const testMap = createMapFactory(4, 4, 'Grassland');
 
 // 2. Inject an Industrial Zone onto an arbitrary position
@@ -475,7 +481,7 @@ if (testMap.tiles[targetKey].yields.bonus.production === 1) {
 } else {
     console.error("❌ ERROR: Calculation Engine returned unexpected output values.");
 }
-Use code with caution.
+```
 
 Module 3 Milestone Verification
 
@@ -502,7 +508,8 @@ Step 1: Update Your Main Canvas Interface
 Before writing the rendering code, ensure your main layout structure supports clear spacing for the canvas.
 1. Open your project's index.html file.
 2. Ensure the body structure provides clean alignment parameters for drawing elements:
-html
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -522,14 +529,15 @@ html
     <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
-Use code with caution.
+```
 
 Step 2: Implement the Canvas Rendering Engine
 
 This engine handles clear-screen cycles, loops over your mapping dictionary configuration properties, draws structural vector path lines, and overlays text string readouts dynamically.
 1. Create a new file named src/view/canvasRender.ts.
 2. Paste the complete visual rendering sequence:
-typescript
+
+```typescript
 import { IMapConfig, ITileState } from '../types/grid';
 import { getHoneycombGrid } from '../engine/mathEngine';
 
@@ -622,14 +630,15 @@ export function drawMapCanvas(canvas: HTMLCanvasElement, mapConfig: IMapConfig):
     }
   });
 }
-Use code with caution.
+```
 
 Step 3: Run the Visual Rendering Loop Sequence
 
 Let's link your console data calculations seamlessly with your newly constructed visual canvas pipeline layer.
 1. Open your project entry file src/main.ts.
 2. Update its code to coordinate the map generation, calculation sweep, and vector rendering steps sequentially:
-typescript
+
+```typescript
 import { createMapFactory } from './engine/factory';
 import { recalculateMapAdjacencies } from './engine/mathEngine';
 import { drawMapCanvas } from './view/canvasRender';
@@ -663,7 +672,7 @@ if (canvasElement) {
 } else {
     console.error("❌ CRITICAL ERROR: Target view canvas DOM element container not found.");
 }
-Use code with caution.
+```
 
 Module 4 Milestone Verification
 
@@ -691,7 +700,8 @@ Step 1: Add the Sidebar UI Elements
 We need to add interactive buttons to your HTML layout so you can change what brush tool you are painting with.
 1. Open your project's index.html file.
 2. Update the container inside the <body> to include a brush menu block:
-html
+
+```html
 <div id="app">
     <!-- Sidebar Control Panel Toolbar -->
     <div id="sidebar" style="width: 220px; background: #333; padding: 15px; border-radius: 8px; display: flex; flex-direction: column; gap: 15px;">
@@ -722,14 +732,15 @@ html
     <!-- Main Map Canvas Screen Viewport -->
     <canvas id="mapCanvas" width="900" height="650"></canvas>
 </div>
-Use code with caution.
+```
 
 Step 2: Implement the Interaction Event Handler
 
 Now we will write the logic that keeps track of the active brush, listens for canvas clicks, calculates the click offset accurately, and handles state transformations.
 1. Create a new file named src/ui/interaction.ts.
 2. Paste the following event mapping controller code into it:
-typescript
+
+```typescript
 import { IMapConfig } from '../types/grid';
 import { getHoneycombGrid, recalculateMapAdjacencies } from '../engine/mathEngine';
 import { drawMapCanvas } from '../view/canvasRender';
@@ -800,14 +811,15 @@ export function setupInteractionEngine(canvas: HTMLCanvasElement, mapConfig: IMa
     drawMapCanvas(canvas, mapConfig);
   });
 }
-Use code with caution.
+```
 
 Step 3: Wire Everything into Your Application Entry Point
 
 Finally, coordinate your data architecture factories, renderers, and interaction listeners to establish a live application workspace.
 1. Open your project entry file src/main.ts.
 2. Replace its debug content with the complete live startup sequence:
-typescript
+
+```typescript
 import { createMapFactory } from './engine/factory';
 import { recalculateMapAdjacencies } from './engine/mathEngine';
 import { drawMapCanvas } from './view/canvasRender';
@@ -835,7 +847,7 @@ if (canvas) {
 } else {
     console.error("❌ CRITICAL BOOT ERROR: Target map canvas canvas node missing from viewport DOM.");
 }
-Use code with caution.
+```
 
 Module 5 Milestone Verification
 
@@ -862,7 +874,8 @@ Step 1: Create the Test Engine Harness
 We need an isolated test script that automatically builds mock scenarios, validates your map calculations against explicit expected results, and logs detailed diagnostic readouts.
 1. Create a new file named src/engine/testRunner.ts.
 2. Paste the complete assertions harness suite into it:
-typescript
+
+```typescript
 import { createMapFactory } from './factory';
 import { recalculateMapAdjacencies, getHoneycombGrid } from './mathEngine';
 import { IMapConfig } from '../types/grid';
@@ -959,14 +972,15 @@ export function runSystematicTests(canvas: HTMLCanvasElement): boolean {
   console.groupEnd();
   return allPassed;
 }
-Use code with caution.
+```
 
 Step 2: Wire the Test Verification Hook Into Your App Boot Loop
 
 To ensure your application code automatically runs its defensive testing routine on every reload, plug the execution call right into the main module entry routine.
 1. Open your project entry file src/main.ts.
 2. Update the boot code sequence to execute assertions before rendering the live workspace view:
-typescript
+
+```typescript
 import { createMapFactory } from './engine/factory';
 import { recalculateMapAdjacencies } from './engine/mathEngine';
 import { drawMapCanvas } from './view/canvasRender';
@@ -1010,7 +1024,7 @@ if (canvas) {
 } else {
     console.error("❌ CRITICAL BOOT ERROR: Target viewport node canvas context missing from DOM tree.");
 }
-Use code with caution.
+```
 
 Module 6 Milestone Verification
 
