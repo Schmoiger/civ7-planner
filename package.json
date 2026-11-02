@@ -1,0 +1,14 @@
+{
+  "name": "civ7-planner",
+  "private": true,
+  "packageManager": "yarn@4.18.1",
+  "workspaces": [
+    "frontend/civ7-web"
+  ],
+  "scripts": {
+    "install:all": "yarn install",
+    "lint": "yarn workspaces foreach run lint",
+    "test": "yarn workspaces foreach run test",
+    "typecheck": "yarn workspaces foreach run typecheck"
+  }
+}
