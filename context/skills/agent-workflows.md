@@ -1,0 +1,62 @@
+---
+name: agent-workflows
+description: Procedural guidance for agent git commits, pull requests, and metrics logging.
+globs: []
+---
+
+# Agent Workflows Skill
+
+---
+
+## Overview
+
+This skill provides the procedural steps for assembling git commits, formatting PR descriptions, and logging agent metrics, enforcing the invariants defined in `context/rules/workspace-conventions.md`.
+
+---
+
+## 1. Commit Procedure
+
+When committing on behalf of an agent (or yourself), verify the message:
+
+1. **Ensure Trailers Exist**: Check for an `Agent-Session:` line and a `Co-Authored-By:` line.
+2. **Trailer Format**:
+   ```
+   Agent-Session: tool={tool} model={model} agents={agent-role} duration={time} dispatch={human|orchestrator} interactions={N} approvals={N}
+   ```
+   *Note: `tool=`, `model=`, and `tokens=` are written by the `prepare-commit-msg` hook from runtime session telemetry — never include them manually. The `commit-msg` validator rejects `model=`/`tool=` values the runtime session contradicts or cannot corroborate.*
+3. **Format**: Format source files (ruff/biome) before staging.
+4. **Commit**: Write the message to a temporary file (e.g., `/tmp/msg.txt`) and run `git add {files} && git commit -F /tmp/msg.txt`. Do NOT use `git commit -m "$(...)"`.
+5. **Push**: `git push` immediately to publish the commit.
+
+---
+
+## 2. Pull Requests
+
+When creating a PR, use `context/templates/pr-description-template.md`. Compute the Agent Metrics section by parsing Agent-Session lines from all commits on the branch:
+
+```bash
+git log main..HEAD --format='%b' | grep '^Agent-Session:'
+```
+
+---
+
+## 3. Metrics Logging Schema
+
+Append events to `artefacts/build/metrics/session-log.jsonl` — `start`, `handoff`, `escalate`, `complete`, `blocked` — one JSON object per line, never rewriting a line already written.
+
+The record schema (required fields, the `to` rule for handoffs, the token `source` values, and worked examples) is defined in `context/templates/logging-template.md` § Session Metrics Log. Read it before writing your first record; do not guess the shape.
+
+---
+
+## 4. Commit Cadence
+
+Agents shall request commits at **natural checkpoints**, not only at task completion:
+
+| Checkpoint | Example |
+|------------|---------|
+| Test written and failing (RED) | `test(bronze): add ticker_info validation tests` |
+| Implementation passing (GREEN) | `feat(bronze): implement ticker_info validation` |
+| Refactor complete (BLUE) | `refactor(bronze): extract validation helpers` |
+| File group complete | `feat(bronze): add all ohlcv router endpoints` |
+
+At each checkpoint, write your message to `/tmp/{task-id}_commit_msg.txt` and return the file paths if operating as a subagent. If operating directly, follow the commit procedure in Section 1.
