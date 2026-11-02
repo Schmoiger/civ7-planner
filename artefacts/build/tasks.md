@@ -1,4 +1,4 @@
-## Module 1: Project Initialization & Environments (Yarn)
+## Module 1: Project Initialization & Environments (Yarn) - DONE ✅
 
 • Initialise repository: Run yarn init -y and set up git tracking with a standard Node .gitignore file.
 • Install core dependencies: Run yarn add honeycomb-grid.
@@ -134,7 +134,7 @@ This will spin up a local development server at http://localhost:3000 with hot-r
 
 ---
 
-## Module 2: Pure Data Layer & Config Definition
+## Module 2: Pure Data Layer & Config Definition - DONE ✅
 
 • Codify core types schema: Build out src/types/grid.ts using the definitions for ITileState, TerrainType, InfrastructureType, and IYieldMetrics.
 • Establish baseline yield matrices: Code the static global lookups for BASE_TERRAIN_YIELDS and feature modifiers.
