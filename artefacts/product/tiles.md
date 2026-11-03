@@ -42,7 +42,7 @@ Each biome can be further differentiated into Unimproved (Civ7) Terrain morpholo
 - Mountainous (e.g., Mountainous Desert)
 - Navigable River (e.g., Navigable River Desert)
 
-#### Marine biome
+#### Marine biome
 
 In Civilization VII, deep water tiles are collectively called "Marine", forming a sixth biome which can be defined as tiles which are completely covered in water. Land Units Land Units will always have to embark upon entering this biome. Similar to how land biomes can be differentiated into Rough, Flat, and Mountainous Terrains, the Marine biome includes:
 
@@ -85,6 +85,31 @@ Every yield below feeds the others; the loop they form is mapped in The Yield Wh
 😊 Happiness – A settlement-level yield that decides whether cities thrive or stagnate. High Happiness triggers Celebrations; low Happiness causes Unrest, yield penalties, and eventually Revolt. Primary sources: Luxury Resources, Entertainment buildings, certain Wonders, and government policies. Happiness is the silent yield – easy to ignore until it collapses your empire. Full mechanics in Happiness, Governments & Celebrations.
 
 🕊️ Influence – The currency of diplomacy. Like Gold, it accumulates each turn rather than being worked from tiles, which is why it sits slightly apart from the other six. Primary sources: Chancery, Embassy, and Foreign Ministry, Social Policies, and the Diplomatic Attribute Tree. Without it you cannot propose Endeavors, establish Treaties, or contest City-State suzerainty. Full mechanics in Diplomacy, Influence & Trade.
+
+### Land
+
+| Biome | Flat* | Rough | Vegetated | Wet** | Mountainous*** | Navigable River |
+|-------|-------|-------|-----------|-------|----------------|-----------------|
+| Tundra | 1 Production 1 Culture | 2 Production | 1 Production 1 Food 1 Culture | 1 Food 1 Production 1 Culture | 1 Production | 1 Food 1 Gold |
+| Grassland | 2 Food | 1 Production 1 Food | 2 Food 1 Production | 2 Food 1 Production | 1 Food | 1 Food 1 Gold |
+| Plains | 1 Production 1 Food | 2 Production | 2 Production 1 Food | 1 Food 2 Production | 1 Production | 1 Food 1 Gold |
+| Desert | 1 Production 1 Gold | 2 Production | 1 Production 1 Food 1 Gold | 1 Food 2 Production | 1 Gold | 1 Food 1 Gold |
+| Tropical | 1 Food 1 Science | 1 Production 1 Food | 1 Production 1 Food 1 Science | 1 Food 1 Production 1 Science | 1 Production | 1 Food 1 Gold |
+
+* Flat Terrain gain +1 Food Food from Floodplains Floodplains.
+** Wet Terrain has 1 less Production Production in the Antiquity Age Antiquity Age until Pottery is researched.
+*** Mountain Terrain have no 'base' yields when they are a Volcano.
+
+### Marine
+
+| Terrain | Featureless | Aquatic Feature |
+|---------|-------------|-----------------|
+| Lake | 1 Food 1 Gold | 2 Food 1 Culture |
+| Coastal | 1 Food 1 Gold | 1 Food 1 Production 1 Science |
+| Ocean | 1 Food 1 Gold* | 2 Food 2 Production 1 Culture** |
+
+* Only available in the Modern Age Modern Age.
+** Not available in the Antiquity Age Antiquity Age.
 
 
 ---
@@ -319,6 +344,8 @@ When a second building goes onto an urban tile, that tile becomes a Quarter. Qua
 
 ---
 
+---
+
 ## Specialists
 
 Specialists are the highest-leverage yield amplifiers in the game, and their assignment is permanent and irreversible. Plan every one.
@@ -329,75 +356,133 @@ Specialists are the highest-leverage yield amplifiers in the game, and their ass
 
 All tiles (except for Mountains and Open Ocean) can come with Resources Resources spawned on top of them. Most Resources have specific spawn requirements based on the Biome, Morphology, and Feature class. Resources enhance the tile with additional yields and prevent any infrastructure from being built on top of them.
 
-### Bonus Resources – flat yields, any Settlement
+A Resource may give a +1 to the Yield of its Tile, and may give additional Yield effects.
 
-Workable by any Settlement, Town or City alike, providing flat yield boosts to the tile they occupy.
+### Antiquity Age
 
-| Resource | Yield |
-|----------|-------|
-| 🐟 Fish | +6 Food with a Port; +3 Food otherwise |
-| 🦌 Hides | +3 Production |
-| 🧵 Cotton | +2 Food, +2 Production |
-| 🌴 Dates | +2 Food, +2 Happiness |
-| 🎨 Dyes | +4 Happiness |
-| 🐑 Wool | +2 Production, +2 Happiness |
-| 💎 Rubies | +4 Gold |
-| 🦀 Crabs | +1 Food on tile; +1 / +2 / +3 Food on Warehouse Buildings by Age |
-| 🐚 Cowrie | +1 Happiness on tile; +4 / +5 / +6 Gold in Cities, +2 / +3 / +4 Science in Towns by Age |
-| 🐢 Turtles | +1 Culture on tile; +1 / +2 Culture on Warehouse Buildings in Antiquity / Exploration |
-| ⚫ Pitch | +1 Production, +1 Gold on tile; +1 Gold on Water Buildings in Exploration; +1 Production on Factories and +10% toward Factories in Modern |
-| 🟫 Clay | +1 Production on Warehouse Buildings |
-| 🌿 Flax | +2 Science, +2 Culture |
-| 🦙 Llamas | +1 Production, +3 Happiness |
-| 🦬 Wild Game | +2 Food in Cities, +4 Food in Towns |
-| 🐋 Whales | +5 Production |
-| 🐎 Horses | +8 Happiness. Modern only |
+| Resource | Type | Effect | +1 Tile yield | Biome |
+|----------|------|--------|------------|-------|
+| Camels | City | Increases number of Resources that can be assigned to a City by +2 | Gold | Desert, Plains |
+| Clay | Bonus | +1 Production on Warehouse Buildings | Production | All |
+| Cotton | Bonus | +2 Food, +2 Production | Gold | Desert, Plains, Grassland |
+| Cowrie | Bonus | +4 Gold in Cities, +2 Science in Towns | Happiness | Marine |
+| Crabs | Bonus | +1 Food on Warehouse Buildings | Food | Marine |
+| Dates | Bonus | +2 Food, +2 Happiness | Food | Desert |
+| Dyes | Bonus | +4 Happiness | Culture | Marine |
+| Fish | Bonus | +3 Food | Food | Marine |
+| Flax | City | +2 Science, +2 Culture | Science | Plains, Grassland |
+| Gold | Empire | +1 Gold and Happiness in Settlements | Gold | Plains, Grassland, Tropical |
+| Gypsum | City | +2 Production in Capital, +4 Production to any other City | Science | Plains, Tundra |
+| Hardwood | Empire | +10% Production towards training Naval Units | Culture | Tundra, Tropical |
+| Hides | Bonus | +3 Production | Production | Tundra |
+| Horses | Empire | Cavalry Units gain +1 (max +6) Combat Strength | Production | Plains, Grassland |
+| Incense | City | +10% Science | Science | Desert, Plains |
+| Iron | Empire | Infantry Units gain +1 (max +6) Combat Strength | Production | All |
+| Ivory | Empire | +10% Production towards Wonders placed in Tropical, Plains, and Desert Terrain | Culture | Desert, Plains, Grassland, Tropical |
+| Jade | City | +10% Gold | Culture | Plains, Tundra, Tropical |
+| Kaolin | City | +2 Food in Capital, +4 Food to any other City | Food | Plains, Grassland, Tropical |
+| Lapis Lazuli | City | +4 Production, +5% Gold |  |  |
+| Limestone | Empire | +5% Production towards all Wonders | Production | Desert, Plains, Grassland |
+| Llamas | Bonus | +1 Production, +3 Happiness | Happiness | Tropical |
+| Mangoes | City | +2 Food, +2 Culture | Culture | Tropical |
+| Marble | Empire | +10% Production towards Wonders placed in Grassland, Tundra, and Marine Terrain | Culture | Plains, Grassland |
+| Pearls | City | +2 Happiness in Capital, +4 Happiness to any other City | Gold | Marine |
+| Rice | Empire | +2 Food in all Settlements | Food | Plains, Grassland, Tropical |
+| Rubies | Bonus | +4 Gold | Gold | Desert, Plains, Tropical |
+| Salt | City | +20% Production towards training Units | Food | Desert, Plains, Tundra |
+| Silk | City | +10% Culture | Culture | Plains, Grassland, Tropical |
+| Silver | Empire | +1 Gold and Food in Settlements | Gold | Desert, Tundra |
+| Tin | Bonus | +2 Production in Cities, +4 Production in Towns | Production | Plains, Tropical |
+| Turtles | Bonus | +1 Culture on Warehouse Buildings | Culture | Marine |
+| Wild Game | Bonus | +2 Food in Cities, +4 Food in Towns | Food | Grassland, Tundra, Tropical |
+| Wine | Empire | +2 Happiness in the Capital, +5 Culture when in a Celebration | Happiness | Plains, Grassland |
+| Wool | Bonus | +2 Production, +2 Happiness | Production | All |
 
-### City Resources – require a City and a Resource Slot
+### Exploration Age
 
-Require a City (not a Town) and must be slotted into a Resource Slot to activate. They provide percentage-based bonuses or scaling yields that reward larger, more developed cities.
+| Resource | Type | Effect | +1 Tile yield | Biome |
+|----------|------|--------|------------|-------|
+| Camels | City | Increases number of Resources that can be assigned to a City by +2 | Gold | Desert, Plains |
+| Clay | Bonus | +1 Production on Warehouse Buildings | Production | All |
+| Cloves | City | +6 Food, +10% Gold |  |  |
+| Cocoa | Treasure | +1 Happiness in Towns, doubled in Homelands |  | Tropical |
+| Cotton | Bonus | +3 Food, +3 Production | Gold | Desert, Plains, Grassland |
+| Cowrie | Bonus | +5 Gold in Cities, +3 Science in Towns | Happiness | Marine |
+| Crabs | Bonus | +2 Food on Warehouse Buildings | Food | Marine |
+| Dates | Bonus | +3 Food, +3 Happiness | Food | Desert |
+| Dyes | Bonus | +5 Happiness | Culture | Marine |
+| Fish | Bonus | +5 Food | Food | Marine |
+| Flax | Bonus | +2 Science, +2 Culture | Science | Plains, Grassland |
+| Furs | Treasure | +3 Happiness in the Capital, +10 Gold when in a Celebration |  | Plains, Tundra |
+| Gold | Treasure | +1 Gold and +1 Happiness in Settlements | Gold | Plains, Grassland, Tropical |
+| Gypsum | City | +3 Production to Homeland Cities, +6 Production to Distant Land Cities | Science | Plains, Tundra |
+| Hardwood | Empire | +20% Production towards Naval Units | Culture | Tundra, Tropical |
+| Horses | Treasure | Cavalry Units gain +1 (max +6) Combat Strength | Production | Plains, Grassland |
+| Incense | City | +100% Production towards Missionaries and Temples | Science | Desert, Plains |
+| Iron | Empire | Infantry Units gain +1 (max +6) Combat Strength | Production | All |
+| Ivory | Bonus | +3 Happiness, +3 Production | Culture | Desert, Plains, Grassland, Tropical |
+| Jade | City | +10% Gold | Culture | Plains, Tundra, Tropical |
+| Kaolin | City | +3 Food to Homeland Cities, +6 Food to Distant Land Cities | Food | Plains, Grassland, Tropical |
+| Limestone | Empire | +10% Production towards Buildings | Production | Desert, Plains, Grassland |
+| Llamas | Bonus | +1 Production, +5 Happiness | Happiness | Tropical |
+| Mangoes | City | +3 Food, +3 Culture | Culture | Tropical |
+| Marble | Empire | +10% Production towards constructing Wonders | Culture | Plains, Grassland |
+| Niter | Empire | Siege and Naval Units gain +1 (max +6) Combat Strength |  | All |
+| Pearls | City | +3 Happiness to Homeland Cities, +6 Happiness to Distant Land Cities | Gold | Marine |
+| Pitch | Bonus | +1 Gold on water Buildings | Production | Plains, Grassland, Tropical |
+| Rice | Empire | +2 Food in all Settlements | Food | Plains, Grassland, Tropical |
+| Rubies | Treasure | +1 Gold in Towns, doubled in Homelands | Gold | Desert, Plains, Tropical |
+| Silk | City | +10% Culture | Culture | Plains, Grassland, Tropical |
+| Silver | Treasure | +1 Gold and +1 Food in Settlements | Gold | Desert, Tundra |
+| Spices | Treasure | +1 Culture and Influence in Cities, doubled in Homelands |  | Grassland, Tropical |
+| Sugar | Treasure | +1 Food and +1 Happiness in Cities, doubled in Homelands |  | Plains, Grassland, Tropical |
+| Tea | Treasure | +1 Science and +1 Production in Cities, doubled in Homelands |  | Plains, Grassland |
+| Tin | Bonus | +3 Production, +3 Gold | Production | Plains, Tropical |
+| Truffles | City | +20% Production towards training Units |  | Plains, Grassland, Tundra |
+| Turtles | Bonus | +2 Culture on Warehouse Buildings | Culture | Marine |
+| Whales | Bonus | +5 Production |  | Marine |
+| Wild Game | Bonus | +3 Food in Cities, +6 Food in Towns | Food | Grassland, Tundra, Tropical |
+| Wine | Empire | +3 Happiness in the Capital, +10 Culture when in a Celebration | Happiness | Plains, Grassland |
 
-| Resource | Effect |
-|----------|--------|
-| 💚 Jade | +15% Gold in this city |
-| 🕯️ Incense | +10% Science in this city |
-| 🧶 Silk | +10% Culture in this city |
-| 🏺 Kaolin | Antiquity +2 Food in Capital, +4 Food in any other City; Exploration +3 Food in Homeland Cities, +6 Food in Distant Lands Cities |
-| 🧱 Gypsum | +2 Production in the Capital, +4 in other Cities |
-| 🧂 Salt | +20% unit Production in this city |
-| 🦪 Pearls | +8 Happiness in the Capital, +4 in other Cities |
-| 🥭 Mangoes | +2 Food, +2 Culture |
-| 🍄 Truffles | +20% Production toward training Units |
-| 🍂 Tobacco | +8 Production with a Rail Station, +4 otherwise. Modern only |
-| 🐫 Camels | +2 Resource capacity in this City, without consuming a slot |
+### Modern Age
 
-### Treasure Resources – Exploration Age
-
-| Resource | Yield Where Worked |
-|----------|-------------------|
-| 💎 Rubies | +1 Gold in Towns, doubled in the Homelands |
-| 🍫 Cocoa | +1 Happiness in Towns, doubled in the Homelands |
-| 🦫 Furs | +3 Happiness in the Capital; +10 Gold during a Celebration |
-| 🪙 Gold | +1 Gold and +1 Happiness in all Settlements |
-| 🐎 Horses | +1 Combat Strength for Cavalry Units |
-| 🥈 Silver | +1 Gold and +1 Food in all Settlements |
-| 🌶️ Spices | +1 Culture and +1 Influence in Cities, doubled in the Homelands |
-| 🍬 Sugar | +1 Food and +1 Happiness in Cities, doubled in the Homelands |
-| 🍵 Tea | +1 Science and +1 Production in Cities, doubled in the Homelands |
-
-### Factory Resources – Modern Age, require a Factory
-
-| Resource | Effect |
-|----------|--------|
-| ☕ Coffee | +5% Production toward Buildings and Wonders |
-| 🧵 Cotton | +5% Production toward Land Units |
-| 🍋 Citrus | +5% Production toward Naval Units |
-| 🍵 Tea | +3% Science |
-| 🏺 Kaolin | +3% Culture |
-| 🍫 Cocoa | +3% Happiness |
-| 🪨 Tin | +3% Growth Rate |
-| 💊 Quinine | +1 HP recovery per turn for units |
-
+| Resource | Type | Effect | +1 Tile yield | Biome |
+|----------|------|--------|------------|-------|
+| Citrus | Factory | +5% Production towards training Naval Units |  | Plains, Grassland |
+| Coal | Empire | Light Naval Units gain +1 (max +6) Combat Strength, +10% Production bonus towards Rail Stations and Ports |  | Desert, Plains, Grassland, Tropical |
+| Cocoa | Factory | +3% Happiness |  | Tropical |
+| Coffee | Factory | +5% Production towards constructing Buildings and Wonders |  | Plains, Tropical |
+| Cotton | Factory | +5% Production towards training Land Units | Gold | Desert, Plains, Grassland |
+| Cowrie | Bonus | +6 Gold in Cities, +4 Science in Towns | Happiness | Marine |
+| Crabs | Bonus | +3 Food on Warehouse Buildings | Food | Marine |
+| Fish | Bonus | +8 Food in Settlements with a Port, +4 Food in any other Settlement | Food | Marine |
+| Furs | City | +8 Happiness in a City with a Rail Station, +4 Happiness to any other City |  | Plains, Tundra |
+| Gold | Empire | +1 Gold and +1 Happiness in Settlements | Gold | Plains, Grassland, Tropical |
+| Hardwood | Empire | +20% Production towards Civilian Units | Culture | Tundra, Tropical |
+| Horses | Bonus | +8 Happiness | Production | Plains, Grassland |
+| Ivory | Bonus | +4 Happiness, +4 Production | Culture | Desert, Plains, Grassland, Tropical |
+| Kaolin | Factory | +3% Culture | Food | Plains, Grassland, Tropical |
+| Limestone | Empire | +10% Production towards Buildings, Grssland | Production | Desert, Plains |
+| Llamas | Bonus | +1 Production, +7 Happiness | Happiness | Tropical |
+| Marble | Empire | +10% Production towards constructing Wonders | Culture | Plains, Grassland |
+| Nickel | City | +10% Gold, +10% Science |  |  |
+| Niter | Empire | Siege, Ranged, and Heavy Naval Units gain +1 (max +6) Combat Strength |  | All |
+| Oil | Empire | Heavy Naval and Cavalry Units gain +1 (max +6) Combat Strength, +10% Production bonus towards Factories |  | Desert, Grassland, Tundra |
+| Pearls | City | +8 Happiness in Capital, +4 Happiness to any other City | Gold | Marine |
+| Pitch | Bonus | +1 Production on Factories, +10% Production towards constructing Factories in all Settlements when slotted | Production | Plains, Grassland, Tropical |
+| Quinine | Factory | +1 Healing for Units |  | Plains, Grassland |
+| Rice | Empire | +2 Food in all Settlements | Food | Plains, Grassland, Tropical |
+| Rubber | Empire | Infantry and Air Units gain +1 (max +6) Combat Strength |  | Grassland, Tropical |
+| Silk | City | +8 Culture in Capital, +4 Culture to any other City | Culture | Plains, Grassland, Tropical |
+| Silver | Empire | +1 Gold and +1 Food in Settlements | Gold | Desert, Tundra |
+| Spices | Bonus | +4 Food, +4 Happiness |  | Grassland, Tropical |
+| Sugar | Bonus | +8 Food |  | Plains, Grassland, Tropical |
+| Tea | Factory | +3% Science |  | Plains, Grassland |
+| Tin | Factory | +3% Growth Rate | Production | Plains, Tropical |
+| Tobacco | City | +8 Production in a City with a Rail Station, +4 Production to any other City |  | Plains, Grassland |
+| Truffles | City | +8 Food in a City with a Rail Station, +4 Food to any other City |  | Plains, Grassland, Tundra |
+| Whales | Bonus | +8 Production |  | Marine |
+| Wine | Bonus | +4 Food, +4 Production | Happiness | Plains, Grassland |
 
 ---
 
