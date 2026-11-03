@@ -1,5 +1,82 @@
 # Civ 7 City Planner: Data Model
 
+
+---
+
+## Data Objects
+
+Tile:
+- Has base value for each Yield
+- Is of type Biome
+- May contain a Resource to a limit of 1
+- May be modified by placing an Improvement to a limit of 1
+- May be modified by placing a Building  to a limit of 2
+- Gives adjacency bonus depending on: no Improvemement, after Improvement, after Building, after Quarter
+
+Yield:
+- Five types of yields: Food, Production, Gold, Science, Culture, Happiness, Influence
+
+Biome:
+- Types: Land, Marine
+- Land Biome has subtypes: Tundra, Grassland, Plains, Desert, Tropical
+- Land Biome subtypes have modifiers: Flat, Rough, Mountainous, Navigable River
+- Marine Biome has subtypes: Coastal, Ocean, Lake
+
+Resources:
+see `### Bonus Resources – flat yields, any Settlement` in artefacts/product/tiles.md
+- modifies one or more base Yields
+
+Improvements:
+see `### Types of Improvement` in `artefacts/product/tiles.md in artefacts/product/tiles.md`
+- modifies one or more base Yields
+- an Improvement on a Natural Wonder is called a Research Station
+
+Settlement:
+- Types: City, Town
+- Always has a Building at its centre
+- Has aggregated value for each Yield
+- Settlement border is 3 tiles from centre (excluding centre)
+
+Buildings:
+- see `## Buildings` in `artefacts/product/tiles.md in artefacts/product/tiles.md`
+- modifies one or more base Yields
+- Building at centre of a City Settlement must be of type: Capital
+- Building at centre of a Town Settlement must be of type: City Hall
+- There are restrictions as to which Building may be placed on which Tile
+- Buildings cost maintenance according to type
+
+Quarter:
+- Two Buildings placed on the same Tile
+
+Empire:
+- One of more Settlements
+- May modify Yields across the Empire
+
+Religion:
+- May modify Yields across the Empire
+
+### Settlment Yield Calculation
+
+- Each Tile that has an Improvement or one or more Buildings contributes to the Yield
+- Each Tile contributes: base value + addition from Improvement or Building + addition from adjacent Tiles
+- Each Settlement receives bonus to one of more types of Yield from Empire, Specialists, some Buildings, Religion
+- Addition to yield value can be integer (e.g. +1) or percentage (e.g. +10%)
+
+Settlement Yield Algorithm:
+
+1. Retrieve base Yield values from Tile properties
+2. Calculate addition to Yield from Tile's Improvements, Buildings, Quarter (as applicable)
+3. Calculate addition to Yield from each of the six adjaent Tiles
+4. Total Tile Yield
+5. Apply Settlement modifier(s)
+6. Apply Empire modifier(s)
+7. Subract Building maintenance
+
+
+---
+
+## Implementation Notes
+
 This data model specification defines the complete, strongly typed data layer for your Civilization VII Web Map Planner. It is designed using a normalized, single-directional architecture to cleanly separate static map definitions, active layout configurations, and calculated runtime metrics.
 
 1. Hex Engine Core Schema (TypeScript)
