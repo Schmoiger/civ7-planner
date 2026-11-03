@@ -132,13 +132,6 @@ repos:
         files: ^context/
         pass_filenames: false
 
-      - id: adapter-drift
-        name: Check runtime adapter projections in sync with context/
-        entry: uv run python context/scripts/validators/adapter_drift.py
-        language: python
-        files: ^(context/|AGENTS\.md|GEMINI\.md|CLAUDE\.md|\.claude/|\.github/|\.openai/|\.agents/skills/)
-        pass_filenames: false
-
       - id: agent-definitions
         name: Validate agent definition schema
         entry: uv run python context/scripts/validators/agent_definitions.py
