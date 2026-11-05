@@ -29,9 +29,55 @@ FR-4: Adjacency Calculation Engine
 
 • FR-4.1: Any mutation to a tile state must immediately run an evaluation pass across the entire active grid block.
 • FR-4.2: The calculation engine must completely flush existing dynamically derived yields before applying rulesets.
-• FR-4.3: The calculation engine must query localized neighbor index rings to evaluate specific adjacency criteria:
-	• Rule A (Districts): If infrastructure === 'Campus', query immediate surrounding ring cells. For every neighbor where terrain === 'Mountain', increment yields.bonus.science by +2.
-	• Rule B (Clusters): If infrastructure === 'Farm', parse neighbor array items. For every adjacent hex where infrastructure === 'Farm', increment yields.bonus.food by +1.
+• FR-4.3: The calculation engine must query localized neighbor index rings to evaluate specific adjacency criteria. The adjacency evaluation algorithm proceeds through the following ordered phases:
+
+  **Phase 1: Coordinate Resolution**
+  Before neighbor traversal can begin, each tile must be mapped to its geometric Hex representation. The engine instantiates a Honeycomb Grid using the map's dimensions (width × height) via the `rectangle()` topology helper. For every tile in the map configuration, the engine calls `grid.getHex({ q: tile.q, r: tile.r })` to retrieve the corresponding Honeycomb Hex object. This step enforces a critical constraint: the axial coordinates (q, r) stored on each tile must exactly match the coordinate space produced by Honeycomb's rectangular grid layout. If `getHex` returns `null` — indicating either a coordinate mismatch or an out-of-bounds position — that tile is excluded from adjacency evaluation for the current pass.
+
+  **Phase 2: Neighbor Ring Discovery**
+  For each tile that successfully resolves to a valid Hex, the engine discovers its immediate surrounding ring of adjacent hexagons. Using Honeycomb's `neighborOf(hex, direction)` API with the six pointy-top cardinal directions (E, NE, NW, W, SW, SE), the engine collects all non-null neighbor Hex objects into a flat array. Because the grid has rectangular boundaries, tiles positioned at the edges or corners will have fewer than six neighbors; `null` results from `neighborOf` are filtered out silently. This produces the complete set of adjacent tiles eligible for rule evaluation.
+
+  **Phase 3: Rule Set Filtering**
+  The engine filters the global `CIV7_ADJACENCY_RULES` configuration array to isolate only those rules whose `sourceType` field matches the current tile's `infrastructure` value. This produces an `activeRules` array containing every adjacency rule that could potentially apply to this tile based on what infrastructure it hosts. Tiles whose `infrastructure` is `'None'` produce an empty `activeRules` array and are skipped entirely — they contribute no adjacency bonuses and require no further processing.
+
+  **Phase 4: Per-Neighbor Rule Evaluation**
+  For each neighbor Hex discovered in Phase 2, the engine resolves the corresponding tile data from the map configuration using the neighbor's (q, r) coordinates as a lookup key. Then, for every rule in `activeRules`, the engine evaluates whether the neighbor satisfies the rule's trigger condition:
+  - If `rule.triggerType === 'terrain'`, the neighbor tile's `terrain` property is compared against `rule.triggerTarget`.
+  - If `rule.triggerType === 'feature'`, the neighbor tile's `feature` property is compared against `rule.triggerTarget`.
+  - If `rule.triggerType === 'infrastructure'`, the neighbor tile's `infrastructure` property is compared against `rule.triggerTarget`.
+
+  A match is recorded when the neighbor's property value strictly equals the rule's `triggerTarget` value. The comparison uses strict equality and is case-sensitive.
+
+  **Phase 5: Yield Accumulation**
+  When a rule match is recorded, the engine adds the rule's `bonusYield` values to the source tile's `yields.bonus` accumulator. Each yield field — `food`, `production`, `gold`, `science`, `culture`, `happiness` — is incremented independently by the corresponding value from `bonusYield`. If a field is absent from `bonusYield`, it defaults to 0 and contributes nothing. Multiple rule matches (from different neighbors or different rules) stack additively on the same yield field; for example, a Farm tile adjacent to two other Farm tiles accumulates +2 Food.
+
+  **Phase 6: Full Grid Iteration**
+  Phases 1–5 execute iteratively for every tile in the map configuration. The engine guarantees complete coverage: every tile with non-None infrastructure undergoes neighbor-based bonus evaluation, and every eligible neighbor contributes its applicable bonuses. After all tiles have been processed, the `yields.bonus` field on every tile contains the fully computed adjacency-derived yield increments, ready for the final reduction pass defined in FR-4.4.
+
+```mermaid
+flowchart TD
+    subgraph AdjacencyEngine [Adjacency Calculation Engine]
+        A[Start: Iterate all tiles] --> B[Phase 1: Coordinate Resolution]
+        B -->|getHex returns null| C[Skip tile: no Hex mapping]
+        B -->|getHex returns Hex| D[Phase 2: Neighbor Ring Discovery]
+        D -->|neighborOf returns null| E[No neighbors: proceed to Phase 6]
+        D -->|"neighborOf returns Hex[]"| F[Phase 3: Rule Set Filtering]
+        F -->|activeRules empty| G[Skip rule evaluation]
+        F -->|activeRules populated| G
+        G --> H[Phase 4: Per-Neighbor Rule Evaluation]
+        H -->|rule match found| I[Phase 5: Yield Accumulation]
+        H -->|no match| J[Continue to next neighbor]
+        I --> J
+        J -->|more neighbors| H
+        J -->|all neighbors processed| K[Phase 6: Full Grid Iteration]
+        K --> L[All tiles processed]
+        L --> M[yields.bonus fully computed]
+        L -->|coordinate mismatch| C
+    end
+```
+
+  
+
 • FR-4.4: The system must run a final reduction step summing yields.base and yields.bonus into yields.total for canvas updates.
 
 2. Non-Functional Requirements (NFR)
