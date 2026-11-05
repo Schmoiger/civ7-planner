@@ -4,6 +4,7 @@ import { setupInteractionEngine } from './ui/interaction';
 import { runSystematicTests } from './engine/testRunner';
 import { IMapConfig, ITileState, TerrainType, createBlankYields } from './types/grid';
 import { BASE_TERRAIN_YIELDS } from './engine/config';
+import { loadMapConfig, saveMapConfig } from './engine/mapState';
 
 /**
  * Creates a small hexagonal map: a capital tile surrounded by exactly 1 ring of grassland.
@@ -56,17 +57,47 @@ if (canvas) {
     if (testsClean) {
         console.log("🚀 All systematic tests passed successfully. Booting production canvas workspace...");
 
-        // 2. Initialize small map: capital surrounded by 1 ring of grassland
-        const productionMap = createCapitalRingMap();
+        // 2. Boot sequence: try loading a previously saved map from localStorage first
+        let productionMap: IMapConfig;
+        const loaded = loadMapConfig();
+        if (!loaded) {
+            console.log("📂 No saved map found — creating new default Capital Ring Map.");
+            productionMap = createCapitalRingMap();
+        } else {
+            console.log(`📂 Loading saved map "${loaded.name}" (${Object.keys(loaded.tiles).length} tiles).`);
+            productionMap = loaded;
+        }
 
-        // 3. Kick off default math transformations
+        // 3. Kick off default math transformations on the active map
         recalculateMapAdjacencies(productionMap);
 
         // 4. Fire the paint context refresh pass out to the user window viewport
         drawMapCanvas(canvas, productionMap);
 
         // 5. Establish live cursor point interaction listeners
-        setupInteractionEngine(canvas, productionMap);
+        // Pass a getter so the interaction engine always resolves the current map instance
+        setupInteractionEngine(canvas, () => productionMap);
+
+        // 6. Helper: Reload a saved map by swapping the active production map and re-rendering
+        const reloadMapFromStorage = (): void => {
+            const loadedMap: IMapConfig | null = loadMapConfig();
+            if (!loadedMap) {
+                console.warn('📂 No saved maps found to load.');
+                return;
+            }
+            // Update the productionMap reference and re-run pipeline
+            productionMap = loadedMap;
+            recalculateMapAdjacencies(productionMap);
+            drawMapCanvas(canvas, productionMap);
+            console.log(`📂 Swapped to saved map: ${productionMap.name}`);
+        };
+
+        // 7. Wire up manual Save / Load map UI controls from the sidebar
+        document.getElementById('btnSaveMap')?.addEventListener('click', () => {
+            saveMapConfig(productionMap);
+        });
+
+        document.getElementById('btnLoadMap')?.addEventListener('click', reloadMapFromStorage);
     } else {
         console.error("❌ CRITICAL: App initialization suspended because safety unit tests failed.");
 
