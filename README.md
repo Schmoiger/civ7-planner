@@ -94,6 +94,16 @@ mkdir -p artefacts/{product,architecture,design,build,test-results,shared}
 mkdir -p artefacts/shared/{handoffs,fixtures,mocks}
 ```
 
+### 5. Start the Application (Development Server)
+
+Once initialisation is complete, start the Vite development server:
+
+```bash
+yarn dev
+```
+
+The app runs at **http://localhost:3000**. `vite.config.ts` sets `server.port` to `3000` and `server.open: true`, so the local URL opens in your browser automatically.
+
 ---
 
 ## Environment Variables (`direnv`)
