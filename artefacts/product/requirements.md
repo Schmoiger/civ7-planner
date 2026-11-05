@@ -10,7 +10,7 @@ The purpose of this project is to build a lightweight, browser-based, zero-insta
 
 Module A: The Canvas Workspace (Frontend UI)
 
-• Blank Workspace Initialization: On application load, render an adjustable flat-bordered grid of pointy-top hexagons (defaulting to a "Tiny" map size of 8×6 or 20×14).
+• Blank Workspace Initialization: On application load, render an adjustable flat-bordered grid of pointy-top hexagons, defaulting to a "Tiny" map size of a centre tile surrounded by a ring of single tiles. The centre tile should be a Capital.
 • Tool/Brush Selector Sidebar: An intuitive menu panel allows the user to select an active "brush" or "placement mode."
 • Interactive Editing: Clicking on any grid tile applies the currently selected active brush element to that specific tile.
 • Dynamic Visual Rendering: Redraw the canvas immediately on tile updates to show terrain-specific colour-coding, coordinate indices, and dynamic text overlays representing localized resource yields.

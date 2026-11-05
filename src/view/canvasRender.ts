@@ -1,5 +1,5 @@
 import { IMapConfig } from '../types/grid';
-import { getHoneycombGrid } from '../engine/mathEngine';
+import { CivHex } from '../engine/mathEngine';
 
 // Configuration lookup dictionary mapping flat hexadecimal colour codes directly onto terrains
 const TERRAIN_COLORS: Record<string, string> = {
@@ -20,14 +20,31 @@ export function drawMapCanvas(canvas: HTMLCanvasElement, mapConfig: IMapConfig):
   // 1. Core Cleanup Pass: Flush previous render vectors from the viewing monitor screen
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // 2. Instantiate a temporary grid tracking model to calculate precise tile corner layouts
-  const geoGrid = getHoneycombGrid(mapConfig);
+  // 2. Compute bounding box of all hexes to center the map on canvas
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  Object.keys(mapConfig.tiles).forEach(key => {
+    const tile = mapConfig.tiles[key];
+    const hex = new CivHex({ q: tile.q, r: tile.r });
+    hex.corners.forEach(c => {
+      if (c.x < minX) minX = c.x;
+      if (c.x > maxX) maxX = c.x;
+      if (c.y < minY) minY = c.y;
+      if (c.y > maxY) maxY = c.y;
+    });
+  });
+
+  const mapWidth = maxX - minX;
+  const mapHeight = maxY - minY;
+  const offsetX = (canvas.width - mapWidth) / 2 - minX;
+  const offsetY = (canvas.height - mapHeight) / 2 - minY;
+
+  ctx.save();
+  ctx.translate(offsetX, offsetY);
 
   // 3. Main Operational Draw Loop
   Object.keys(mapConfig.tiles).forEach(key => {
     const tile = mapConfig.tiles[key];
-    const hex = geoGrid.getHex({ q: tile.q, r: tile.r });
-    if (!hex) return;
+    const hex = new CivHex({ q: tile.q, r: tile.r });
 
     // --- Part A: Trace the Hexagon Edge Vector Path ---
     ctx.beginPath();
@@ -61,8 +78,11 @@ export function drawMapCanvas(canvas: HTMLCanvasElement, mapConfig: IMapConfig):
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    // Label infrastructure shortcodes or coordinate locations cleanly
-    if (tile.infrastructure !== 'None') {
+    // Label capital, infrastructure shortcodes, or coordinate locations cleanly
+    if (tile.isStartingTile) {
+      ctx.fillStyle = '#ffdf65';
+      ctx.fillText('CAPITAL', hex.x, hex.y - 4);
+    } else if (tile.infrastructure !== 'None') {
       const displayLabel = tile.infrastructure.substring(0, 4).toUpperCase();
       ctx.fillText(displayLabel, hex.x, hex.y - 4);
     } else {
